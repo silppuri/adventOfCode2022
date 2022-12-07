@@ -8,16 +8,18 @@ COPY day01(calories) FROM '/inputs/01.txt' WITH (FORMAT csv);
 
 WITH elf_with_group AS (
     SELECT
-        id AS calory_id,
+        -- Every empty row increases the elf id
         id - row_number() OVER (ORDER BY id) AS elf_id,
         calories
     FROM day01
     WHERE calories IS NOT NULL
 )
-SELECT SUM (calories) AS calory_sum
+
+-- Sum calories by elf id, order it by sum and select only one row
+SELECT SUM (calories) AS calories_sum
 FROM elf_with_group
 GROUP BY elf_id
-ORDER BY calory_sum DESC
+ORDER BY calories_sum DESC
 LIMIT 1;
 
 ROLLBACK;
