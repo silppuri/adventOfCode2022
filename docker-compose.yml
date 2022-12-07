@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    image: 'postgres:14.2'
+    container_name: advent-of-code
+    command: ['postgres', '-c', 'log_statement=all']
+    restart: always
+    environment:
+      - POSTGRES_USER=santa
+      - POSTGRES_DB=advent_of_code
+      - POSTGRES_PASSWORD=petteripunakuono
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./inputs:/inputs
+      - ./init.sql:/docker-entrypoint-initdb.d/setup.sql

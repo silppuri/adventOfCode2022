@@ -1,0 +1,8 @@
+if [ $# -eq 0 ]
+  then
+    echo "Usage:"
+    echo "  bin/run <path of day>"
+    exit 1
+fi
+
+PGPASSWORD=petteripunakuono psql -h localhost -p 5432 -U santa -d advent_of_code -a -f $1

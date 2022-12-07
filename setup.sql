@@ -1,0 +1,1 @@
+CREATE DATABASE advent_of_code;
