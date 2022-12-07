@@ -13,13 +13,16 @@ WITH elf_with_group AS (
         calories
     FROM day01
     WHERE calories IS NOT NULL
+), sum_of_calories AS (
+    SELECT SUM (calories) AS calories_sum
+    FROM elf_with_group
+    GROUP BY elf_id
+    ORDER BY calories_sum DESC
 )
 
--- Sum calories by elf id, order it by sum and select only one row
-SELECT SUM (calories) AS calories_sum
-FROM elf_with_group
-GROUP BY elf_id
-ORDER BY calories_sum DESC
-LIMIT 1;
+SELECT
+    (SELECT calories_sum FROM sum_of_calories LIMIT 1) AS part_one,
+    (SELECT SUM(t.calories_sum) FROM (SELECT calories_sum FROM sum_of_calories LIMIT 3) t) AS part_two;
+;
 
 ROLLBACK;
